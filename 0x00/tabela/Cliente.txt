@@ -1,1 +1,4 @@
-1|Betty|betty@techcamps.com|12345678
+      id = 1
+    nome = Betty
+   email = betty@techcamps.com
+telefone = 12345678
