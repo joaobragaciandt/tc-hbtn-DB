@@ -1,33 +1,29 @@
 package org.example;
 
 
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
 public class PrintJDBCDrivers {
 
-    static Map<String,String> driverNames;
-
-    public static void insereDrivers() {
-        driverNames = new HashMap<>();
-
-        driverNames.put("PostgreSQL","org.postgresql.Driver");
-        driverNames.put("Firebird SQL","org.firebirdsql.jdbc.FBDriver");
-        driverNames.put("H2 Database Engine","org.h2.Driver");
-        driverNames.put("IBM DB2","com.ibm.db2.jcc.DB2Driver");
-        driverNames.put("Oracle","oracle.jdbc.OracleDriver");
-        driverNames.put("MariaDB","org.mariadb.jdbc.Driver");
-        driverNames.put("MySQL","com.mysql.jdbc.Driver");
-
-
-    }
-
-    public static void imprimeDriverName(String key, String value) {
-        System.out.println("Nome do Drive: " + key + ", Versão do drive: " + value);
-    }
-
     public static void main(String[] args) {
-        insereDrivers();
-        driverNames.forEach(PrintJDBCDrivers::imprimeDriverName);
+        System.out.println("List of loaded JDBC drivers");
+        for (Enumeration<Driver> e = DriverManager.getDrivers(); e.hasMoreElements();) {
+            Driver driver = e.nextElement();
+            print(driver);
+        }
+    }
+    public static void print(Driver driver) {
+        String className = driver.getClass().getName();
+        int majorVersion = driver.getMajorVersion();
+        int minorVersion = driver.getMinorVersion();
+        System.out.println("----------------------------------------");
+        System.out.println("Name Driver: " + className);
+        System.out.println("Driver Major Version: " + majorVersion);
+        System.out.println("Driver Minor Version: " + minorVersion);
+        System.out.println("----------------------------------------");
     }
 }
